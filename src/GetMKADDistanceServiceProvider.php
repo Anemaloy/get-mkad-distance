@@ -36,16 +36,11 @@ class GetMKADDistanceServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('GetMKADDistance', function (Container $app) {
-            $config = $app['config'];
-            return new GetYandexDistanceToMKAD($config);
-        });
+
     }
 
     public function provides()
     {
-        return [
-            'GetMKADDistance',
-        ];
+
     }
 }
