@@ -1,0 +1,31 @@
+{
+    "name": "anemaloy/get-mkad-distance",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Temo",
+            "email": "studder.alex@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/yandex-money/yandex-money-sdk-php"
+        }
+    ],
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Anemaloy\\GetMKADDistance\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Anemaloy\\GetMKADDistance\\GetMKADDistanceServiceProvider"
+            ]
+        }
+    },
+    "require": {}
+}
