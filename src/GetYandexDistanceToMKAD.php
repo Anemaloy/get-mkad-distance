@@ -13,9 +13,12 @@ class GetYandexDistanceToMKAD
      */
     private $key;
 
-    public function __construct(Repository $config)
+    public function __construct()
     {
-        $this->key = config('mkad_distance_config.drivers')[config('mkad_distance_config.driver')]['key'];
+        if (isset(config('mkad_distance.drivers')[config('mkad_distance.driver')]['key'] ))
+        {
+            $this->key = config('mkad_distance.drivers')[config('mkad_distance.driver')]['key'];
+        }
     }
 
     /**
@@ -24,9 +27,12 @@ class GetYandexDistanceToMKAD
      */
     public function SearchObjectByAddress($Address)
     {
-        $url = "http://geocode-maps.yandex.ru/1.x/?apikey={$this->key}&geocode=" . urlencode($Address) . "&results=1";
-        $result = file_get_contents($url);
-        return $result;
+        if ($this->key) {
+            $url = "http://geocode-maps.yandex.ru/1.x/?apikey={$this->key}&geocode=" . urlencode($Address) . "&results=1";
+            $result = file_get_contents($url);
+            return $result;
+        }
+        return false;
     }
 
     /**
@@ -105,22 +111,24 @@ class GetYandexDistanceToMKAD
      */
     public function CheckMkad($address)
     {
-        $polyhon = YandexPoligon::GetMkadPolygon();
-        $xml = $this->SearchObjectByAddress($address);
-        $coordinates = $this->GetPoint($xml);
-        $point = new YandexPoint($coordinates);
-        $is_mkad = $polyhon->IsInPolygon($point);
-        $close_point = $polyhon->GetClosestPoint($point);
-        $distance = $this->GetDistance($close_point, $point);
+        if ($this->key) {
+            $polyhon = YandexPoligon::GetMkadPolygon();
+            $xml = $this->SearchObjectByAddress($address);
+            $coordinates = $this->GetPoint($xml);
+            $point = new YandexPoint($coordinates);
+            $is_mkad = $polyhon->IsInPolygon($point);
+            $close_point = $polyhon->GetClosestPoint($point);
+            $distance = $this->GetDistance($close_point, $point);
+            $result = array(
+                'point' => $point,
+                'closest_point' => $close_point,
+                'is_mkad' => $is_mkad,
+                'distance' => $distance
+            );
 
-        $result = array(
-            'point' => $point,
-            'closest_point' => $close_point,
-            'is_mkad' => $is_mkad,
-            'distance' => $distance
-        );
-
-        return $result;
+            return $result;
+        }
+        return false;
     }
 
     protected function toRad($v)

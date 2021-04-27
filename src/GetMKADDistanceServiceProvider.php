@@ -4,6 +4,7 @@ namespace Anemaloy\GetMKADDistance;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Container\Container;
+use Anemaloy\GetMKADDistance\GetYandexDistanceToMKAD;
 
 class GetMKADDistanceServiceProvider extends ServiceProvider
 {
