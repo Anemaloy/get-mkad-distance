@@ -10,10 +10,9 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/yandex-money/yandex-money-sdk-php"
+            "url": "https://github.com/Anemaloy/get-mkad-distance"
         }
     ],
-    "minimum-stability": "dev",
     "license": "MIT",
     "autoload": {
         "psr-4": {
